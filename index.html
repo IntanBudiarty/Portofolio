@@ -1,950 +1,1325 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Intan Budiarty — Web Developer & Mentor</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intan Budiarty — Web Developer & Mentor</title>
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
 
-<!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          base: '#0b0c10',
-          panel: '#111319',
-          accent: '#8b7cf6',
-          accent2: '#f2c14e',
-          ink: '#eef0f4',
-          muted: '#8a8f9c',
-        },
-        fontFamily: {
-          display: ['"Space Grotesk"', 'sans-serif'],
-          body: ['"Inter"', 'sans-serif'],
-          mono: ['"JetBrains Mono"', 'monospace'],
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: '#0b0c10',
+            panel: '#111319',
+            accent: '#8b7cf6',
+            accent2: '#f2c14e',
+            ink: '#eef0f4',
+            muted: '#8a8f9c',
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
         }
       }
     }
-  }
-</script>
+  </script>
 
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-<style>
-  html { scroll-behavior: smooth; }
-  body {
-    background-color: #0b0c10;
-    background-image:
-      repeating-linear-gradient(to right, rgba(255,255,255,0.045) 0px, rgba(255,255,255,0.045) 1px, transparent 1px, transparent 40px),
-      repeating-linear-gradient(to bottom, rgba(255,255,255,0.045) 0px, rgba(255,255,255,0.045) 1px, transparent 1px, transparent 40px);
-    background-attachment: fixed;
-    cursor: default;
-  }
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
 
-  ::selection { background: #8b7cf6; color: #0b0c10; }
+    body {
+      background-color: #0b0c10;
+      background-image:
+        repeating-linear-gradient(to right, rgba(255, 255, 255, 0.045) 0px, rgba(255, 255, 255, 0.045) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 0px, rgba(255, 255, 255, 0.045) 1px, transparent 1px, transparent 40px);
+      background-attachment: fixed;
+      cursor: default;
+    }
 
-  /* scroll snap "pages" */
-  #scroll-container { scroll-snap-type: y proximity; }
-  .page-section {
-    scroll-snap-align: start;
-    scroll-margin-top: 88px;
-    min-height: 100vh;
-  }
+    ::selection {
+      background: #8b7cf6;
+      color: #0b0c10;
+    }
 
-  .nav-link { position: relative; }
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    left: 0; bottom: -4px;
-    width: 0%;
-    height: 1px;
-    background: #8b7cf6;
-    transition: width .35s ease;
-  }
-  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-  .nav-link.active { color: #eef0f4; }
+    /* scroll snap "pages" */
+    #scroll-container {
+      scroll-snap-type: y proximity;
+    }
 
-  .certificate-card { cursor: pointer; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
-  .certificate-card:hover { transform: translateY(-4px) scale(1.01); border-color: rgba(139,124,246,0.45); box-shadow: 0 18px 40px rgba(0,0,0,0.25); }
+    .page-section {
+      scroll-snap-align: start;
+      scroll-margin-top: 88px;
+      min-height: 100vh;
+    }
 
-  .hero-name-glow {
-    position: relative;
-  }
+    .nav-link {
+      position: relative;
+    }
 
-  .hero-photo-wrap {
-    transform: translateY(0);
-    transition: transform .6s cubic-bezier(.2,.8,.2,1), box-shadow .6s ease;
-  }
-  .hero-photo-wrap:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-  }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 1px;
+      background: #8b7cf6;
+      transition: width .35s ease;
+    }
 
-  #certificate-modal {
-    transition: opacity .3s ease, visibility .3s ease;
-  }
-  #certificate-modal.hidden {
-    opacity: 0;
-    visibility: hidden;
-  }
-  #certificate-modal .modal-panel {
-    transform: translateY(20px) scale(0.98);
-    transition: transform .35s cubic-bezier(.2,.8,.2,1);
-  }
-  #certificate-modal:not(.hidden) .modal-panel {
-    transform: translateY(0) scale(1);
-  }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
 
-  #badge-perspective { perspective: 1400px; }
-  #badge-card { transform-style: preserve-3d; backface-visibility: hidden; }
+    .nav-link.active {
+      color: #eef0f4;
+    }
 
-  .radial-vignette {
-    background: radial-gradient(60% 60% at 50% 35%, rgba(139,124,246,0.12), transparent 70%);
-  }
+    .certificate-card {
+      cursor: pointer;
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
 
-  .grain-noise {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  }
+    .certificate-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      border-color: rgba(139, 124, 246, 0.45);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+    }
 
-  .blob {
-    position: absolute;
-    border-radius: 9999px;
-    filter: blur(90px);
-    pointer-events: none;
-  }
+    .hero-name-glow {
+      position: relative;
+    }
 
-  /* scroll progress bar */
-  #scroll-progress {
-    transform: scaleX(0);
-    transform-origin: left center;
-  }
+    .hero-photo-wrap {
+      transform: translateY(0);
+      transition: transform .6s cubic-bezier(.2, .8, .2, 1), box-shadow .6s ease;
+    }
 
-  /* side page-dot nav */
-  .page-dot { width: 8px; height: 8px; border-radius: 9999px; background: rgba(255,255,255,0.25); transition: all .3s ease; }
-  .page-dot.active { background: #8b7cf6; height: 22px; border-radius: 6px; }
+    .hero-photo-wrap:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
 
-  /* project card tilt + glow */
-  .project-card { transform-style: preserve-3d; --x: 50%; --y: 50%; }
-  .project-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(220px circle at var(--x) var(--y), rgba(139,124,246,0.18), transparent 65%);
-    opacity: 0;
-    transition: opacity .3s ease;
-    pointer-events: none;
-  }
-  .project-card:hover::before { opacity: 1; }
+    #certificate-modal {
+      transition: opacity .3s ease, visibility .3s ease;
+    }
 
-  /* custom cursor */
-  #custom-cursor {
-    position: fixed; top: 0; left: 0;
-    width: 18px; height: 18px;
-    border: 1px solid rgba(238,240,244,0.6);
-    border-radius: 9999px;
-    pointer-events: none;
-    z-index: 999;
-    transform: translate(-50%, -50%);
-    transition: width .25s ease, height .25s ease, background-color .25s ease, border-color .25s ease;
-    mix-blend-mode: difference;
-  }
-  #custom-cursor.cursor-grow {
-    width: 44px; height: 44px;
-    background-color: rgba(139,124,246,0.35);
-    border-color: transparent;
-  }
+    #certificate-modal.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
 
-  input:focus, textarea:focus, button:focus-visible, a:focus-visible {
-    outline: 1px solid #8b7cf6;
-    outline-offset: 3px;
-  }
+    #certificate-modal .modal-panel {
+      transform: translateY(20px) scale(0.98);
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+    }
 
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
-  }
-</style>
+    #certificate-modal:not(.hidden) .modal-panel {
+      transform: translateY(0) scale(1);
+    }
+
+    #badge-perspective {
+      perspective: 1400px;
+    }
+
+    #badge-card {
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+
+    .radial-vignette {
+      background: radial-gradient(60% 60% at 50% 35%, rgba(139, 124, 246, 0.12), transparent 70%);
+    }
+
+    .grain-noise {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+
+    /* scroll progress bar */
+    #scroll-progress {
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    /* side page-dot nav */
+    .page-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.25);
+      transition: all .3s ease;
+    }
+
+    .page-dot.active {
+      background: #8b7cf6;
+      height: 22px;
+      border-radius: 6px;
+    }
+
+    /* project card tilt + glow */
+    .project-card {
+      transform-style: preserve-3d;
+      --x: 50%;
+      --y: 50%;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(220px circle at var(--x) var(--y), rgba(139, 124, 246, 0.18), transparent 65%);
+      opacity: 0;
+      transition: opacity .3s ease;
+      pointer-events: none;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    /* custom cursor */
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(238, 240, 244, 0.6);
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: 999;
+      transform: translate(-50%, -50%);
+      transition: width .25s ease, height .25s ease, background-color .25s ease, border-color .25s ease;
+      mix-blend-mode: difference;
+    }
+
+    #custom-cursor.cursor-grow {
+      width: 44px;
+      height: 44px;
+      background-color: rgba(139, 124, 246, 0.35);
+      border-color: transparent;
+    }
+
+    input:focus,
+    textarea:focus,
+    button:focus-visible,
+    a:focus-visible {
+      outline: 1px solid #8b7cf6;
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
 </head>
 
 <body class="font-body text-ink min-h-screen relative overflow-x-hidden grain-noise">
 
-<!-- custom cursor -->
-<div id="custom-cursor" class="hidden"></div>
+  <!-- custom cursor -->
+  <div id="custom-cursor" class="hidden"></div>
 
-<div id="certificate-modal" class="hidden fixed inset-0 z-[80] items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-  <div class="modal-panel w-full max-w-2xl rounded-3xl border border-white/10 bg-[#111319] p-6 sm:p-8 shadow-2xl relative">
-    <button id="close-certificate-modal" class="absolute right-4 top-4 text-muted hover:text-ink transition-colors">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18"/></svg>
-    </button>
-    <p id="modal-year" class="font-mono text-[10px] uppercase tracking-[0.25em] text-accent"></p>
-    <h3 id="modal-title" class="font-display text-3xl mt-3 text-ink"></h3>
-    <p id="modal-description" class="text-muted text-sm mt-4 leading-relaxed"></p>
-    <div class="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-      <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-accent2">Preview</p>
-      <p id="modal-preview" class="text-ink mt-3 text-sm leading-relaxed"></p>
-    </div>
-    <a id="modal-drive-link" href="#" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-mono uppercase tracking-[0.2em] text-accent hover:bg-accent/20 transition-colors">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 7h10M7 7v10M17 7v10M7 17h10"/></svg>
-      Buka di Google Drive
-    </a>
-  </div>
-</div>
-
-<!-- scroll progress bar -->
-<div class="fixed top-0 inset-x-0 h-[2px] z-[60] bg-white/5">
-  <div id="scroll-progress" class="h-full bg-gradient-to-r from-accent to-accent2"></div>
-</div>
-
-<!-- ambient glow -->
-<div class="fixed inset-0 pointer-events-none radial-vignette"></div>
-
-<!-- side page-dot navigation -->
-<div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4 items-end">
-  <button data-target="home" class="dot-trigger flex items-center gap-3 group">
-    <span class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">Home</span>
-    <span class="page-dot active" data-dot="home"></span>
-  </button>
-  <button data-target="about" class="dot-trigger flex items-center gap-3 group">
-    <span class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">About & Experience</span>
-    <span class="page-dot" data-dot="about"></span>
-  </button>
-  <button data-target="portfolio" class="dot-trigger flex items-center gap-3 group">
-    <span class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">Projects</span>
-    <span class="page-dot" data-dot="portfolio"></span>
-  </button>
-  <button data-target="certificates" class="dot-trigger flex items-center gap-3 group">
-    <span class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">Certificates</span>
-    <span class="page-dot" data-dot="certificates"></span>
-  </button>
-  <button data-target="contact" class="dot-trigger flex items-center gap-3 group">
-    <span class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">Contact</span>
-    <span class="page-dot" data-dot="contact"></span>
-  </button>
-</div>
-
-<!-- NAVBAR -->
-<nav class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-[#0b0c10]/30 border-b border-white/5">
-  <div class="max-w-6xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-    <a href="#" data-target="home" class="nav-trigger font-display text-lg tracking-tight text-ink flex items-center gap-2">
-      <span class="w-2 h-2 rounded-full bg-accent"></span>
-      IB<span class="text-accent">.</span>
-    </a>
-    <div class="hidden md:flex items-center gap-10 font-mono text-xs uppercase tracking-[0.15em] text-muted">
-      <a href="#" data-target="home" class="nav-trigger nav-link active">Home</a>
-      <a href="#" data-target="about" class="nav-trigger nav-link">About & Experience</a>
-      <a href="#" data-target="portfolio" class="nav-trigger nav-link">Projects</a>
-      <a href="#" data-target="certificates" class="nav-trigger nav-link">Certificates</a>
-      <a href="#" data-target="contact" class="nav-trigger nav-link">Contact</a>
-    </div>
-    <a href="#" data-target="contact" class="nav-trigger hidden md:inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest border border-white/15 rounded-full px-4 py-2 hover:border-accent hover:text-accent transition-colors">
-      Let's talk
-    </a>
-    <button id="mobile-menu-btn" class="md:hidden text-ink">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    </button>
-  </div>
-  <div id="mobile-menu" class="hidden md:hidden border-t border-white/5 bg-[#0b0c10]/90 backdrop-blur-md">
-    <div class="flex flex-col px-6 py-4 gap-4 font-mono text-xs uppercase tracking-widest text-muted">
-      <a href="#" data-target="home" class="nav-trigger">Home</a>
-      <a href="#" data-target="about" class="nav-trigger">About & Experience</a>
-      <a href="#" data-target="portfolio" class="nav-trigger">Projects</a>
-      <a href="#" data-target="certificates" class="nav-trigger">Certificates</a>
-      <a href="#" data-target="contact" class="nav-trigger">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<!-- SCROLLING PAGE STAGE -->
-<main id="scroll-container" class="relative z-10">
-
-  <!-- ============ HOME ============ -->
-  <section id="home" class="page-section relative flex items-center px-6 lg:px-10 pt-24 pb-16 overflow-hidden">
-    <div class="blob w-[420px] h-[420px] bg-accent/25 -top-20 -left-32"></div>
-    <div class="blob w-[360px] h-[360px] bg-accent2/15 bottom-0 right-0" id="blob-2"></div>
-
-    <div class="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-center w-full relative">
-      <div>
-        <p class="hero-eyebrow font-mono text-xs uppercase tracking-[0.3em] text-accent mb-5">Web Developer & Mentor / Bengkulu, ID</p>
-        <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.98] font-semibold text-ink">
-          <span class="hero-title-line block overflow-hidden">Intan</span>
-          <span class="hero-title-line hero-name-glow block overflow-hidden text-transparent bg-clip-text bg-gradient-to-r from-accent to-gradient-to-r via-accent to-accent2">Budiarty</span>
-        </h1>
-        <p class="hero-desc mt-7 text-muted text-base sm:text-lg leading-relaxed max-w-md">
-          Sistem Informasi Student at Universitas Bengkulu. Active full-stack & front-end web developer specializing in Laravel, clean layouts, and scalable applications.
-        </p>
-        <div class="mt-10 flex flex-wrap items-center gap-4">
-          <a href="https://drive.google.com/file/d/1SMtfjkMhHfk0-eVvGmi9e2gufPUyNpj2/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="hero-cta cursor-hover inline-flex items-center gap-2 bg-ink text-base px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest text-[#0b0c10] hover:bg-accent transition-colors">
-            CV
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a href="https://drive.google.com/file/d/1OnQLFUk34UcBWbPzS71Yz7C29RgetDkd/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="hero-cta cursor-hover inline-flex items-center gap-2 border border-white/15 px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest text-ink hover:border-accent hover:text-accent transition-colors">
-            Sertifikat
-          </a>
-        </div>
-
-        <div class="hero-cta mt-16 grid grid-cols-3 max-w-sm gap-6 font-mono">
-          <div>
-            <p class="text-2xl text-ink"><span class="counter" data-target-num="7">0</span>+</p>
-            <p class="text-[11px] uppercase tracking-widest text-muted mt-1">Web Projects</p>
-          </div>
-          <div>
-            <p class="text-2xl text-ink"><span class="counter" data-target-num="50">0</span>+</p>
-            <p class="text-[11px] uppercase tracking-widest text-muted mt-1">Students Mentored</p>
-          </div>
-          <div>
-            <p class="text-2xl text-ink"><span class="counter" data-target-num="3">0</span></p>
-            <p class="text-[11px] uppercase tracking-widest text-muted mt-1">Research & HKI</p>
-          </div>
-        </div>
+  <div id="certificate-modal"
+    class="hidden fixed inset-0 z-[80] items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+    <div
+      class="modal-panel w-full max-w-2xl rounded-3xl border border-white/10 bg-[#111319] p-6 sm:p-8 shadow-2xl relative">
+      <button id="close-certificate-modal" class="absolute right-4 top-4 text-muted hover:text-ink transition-colors">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+      <p id="modal-year" class="font-mono text-[10px] uppercase tracking-[0.25em] text-accent"></p>
+      <h3 id="modal-title" class="font-display text-3xl mt-3 text-ink"></h3>
+      <p id="modal-description" class="text-muted text-sm mt-4 leading-relaxed"></p>
+      <div class="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+        <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-accent2">Preview</p>
+        <p id="modal-preview" class="text-ink mt-3 text-sm leading-relaxed"></p>
       </div>
+      <a id="modal-drive-link" href="#" target="_blank" rel="noopener noreferrer"
+        class="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-mono uppercase tracking-[0.2em] text-accent hover:bg-accent/20 transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M7 7h10M7 7v10M17 7v10M7 17h10" />
+        </svg>
+        Buka di Google Drive
+      </a>
+    </div>
+  </div>
 
-      <!-- 3D POLAROID BADGE -->
-      <div id="badge-perspective" class="hero-cta relative flex justify-center items-start select-none mx-auto">
-        <div id="badge-swing" class="relative flex flex-col items-center" style="transform-origin: top center;">
-          <div class="w-2 h-2 rounded-full bg-neutral-600 mb-[-2px] z-20 shadow"></div>
-          <div class="w-9 h-36 bg-gradient-to-b from-neutral-700 via-neutral-800 to-neutral-900 rounded-[3px] relative flex items-start justify-center shadow-lg border border-black/40">
-            <div class="absolute inset-y-2 left-1/2 -translate-x-1/2 w-[1px] bg-white/5"></div>
-            <span class="mt-4 text-[9px] font-mono font-medium tracking-[0.35em] text-neutral-400/90" style="writing-mode: vertical-rl;">HELLO WORLD</span>
+  <!-- scroll progress bar -->
+  <div class="fixed top-0 inset-x-0 h-[2px] z-[60] bg-white/5">
+    <div id="scroll-progress" class="h-full bg-gradient-to-r from-accent to-accent2"></div>
+  </div>
+
+  <!-- ambient glow -->
+  <div class="fixed inset-0 pointer-events-none radial-vignette"></div>
+
+  <!-- side page-dot navigation -->
+  <div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4 items-end">
+    <button data-target="home" class="dot-trigger flex items-center gap-3 group">
+      <span
+        class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">Home</span>
+      <span class="page-dot active" data-dot="home"></span>
+    </button>
+    <button data-target="about" class="dot-trigger flex items-center gap-3 group">
+      <span
+        class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">About
+        & Experience</span>
+      <span class="page-dot" data-dot="about"></span>
+    </button>
+    <button data-target="portfolio" class="dot-trigger flex items-center gap-3 group">
+      <span
+        class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">Projects</span>
+      <span class="page-dot" data-dot="portfolio"></span>
+    </button>
+    <button data-target="certificates" class="dot-trigger flex items-center gap-3 group">
+      <span
+        class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">Certificates</span>
+      <span class="page-dot" data-dot="certificates"></span>
+    </button>
+    <button data-target="contact" class="dot-trigger flex items-center gap-3 group">
+      <span
+        class="text-[10px] font-mono uppercase tracking-widest text-muted opacity-0 group-hover:opacity-100 transition-opacity">Contact</span>
+      <span class="page-dot" data-dot="contact"></span>
+    </button>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-[#0b0c10]/30 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+      <a href="#" data-target="home"
+        class="nav-trigger font-display text-lg tracking-tight text-ink flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-accent"></span>
+        IB<span class="text-accent">.</span>
+      </a>
+      <div class="hidden md:flex items-center gap-10 font-mono text-xs uppercase tracking-[0.15em] text-muted">
+        <a href="#" data-target="home" class="nav-trigger nav-link active">Home</a>
+        <a href="#" data-target="about" class="nav-trigger nav-link">About & Experience</a>
+        <a href="#" data-target="portfolio" class="nav-trigger nav-link">Projects</a>
+        <a href="#" data-target="certificates" class="nav-trigger nav-link">Certificates</a>
+        <a href="#" data-target="contact" class="nav-trigger nav-link">Contact</a>
+      </div>
+      <a href="#" data-target="contact"
+        class="nav-trigger hidden md:inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest border border-white/15 rounded-full px-4 py-2 hover:border-accent hover:text-accent transition-colors">
+        Let's talk
+      </a>
+      <button id="mobile-menu-btn" class="md:hidden text-ink">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/5 bg-[#0b0c10]/90 backdrop-blur-md">
+      <div class="flex flex-col px-6 py-4 gap-4 font-mono text-xs uppercase tracking-widest text-muted">
+        <a href="#" data-target="home" class="nav-trigger">Home</a>
+        <a href="#" data-target="about" class="nav-trigger">About & Experience</a>
+        <a href="#" data-target="portfolio" class="nav-trigger">Projects</a>
+        <a href="#" data-target="certificates" class="nav-trigger">Certificates</a>
+        <a href="#" data-target="contact" class="nav-trigger">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SCROLLING PAGE STAGE -->
+  <main id="scroll-container" class="relative z-10">
+
+    <!-- ============ HOME ============ -->
+    <section id="home" class="page-section relative flex items-center px-6 lg:px-10 pt-24 pb-16 overflow-hidden">
+      <div class="blob w-[420px] h-[420px] bg-accent/25 -top-20 -left-32"></div>
+      <div class="blob w-[360px] h-[360px] bg-accent2/15 bottom-0 right-0" id="blob-2"></div>
+
+      <div class="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-center w-full relative">
+        <div>
+          <p class="hero-eyebrow font-mono text-xs uppercase tracking-[0.3em] text-accent mb-5">Web Developer & Mentor /
+            Bengkulu, ID</p>
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.98] font-semibold text-ink">
+            <span class="hero-title-line block overflow-hidden">Intan</span>
+            <span
+              class="hero-title-line hero-name-glow block overflow-hidden text-transparent bg-clip-text bg-gradient-to-r from-accent to-gradient-to-r via-accent to-accent2">Budiarty</span>
+          </h1>
+          <p class="hero-desc mt-7 text-muted text-base sm:text-lg leading-relaxed max-w-md">
+            Sistem Informasi Student at Universitas Bengkulu. Active full-stack & front-end web developer specializing
+            in Laravel, clean layouts, and scalable applications.
+          </p>
+          <div class="mt-10 flex flex-wrap items-center gap-4">
+            <a href="https://drive.google.com/file/d/1SMtfjkMhHfk0-eVvGmi9e2gufPUyNpj2/view?usp=sharing" target="_blank"
+              rel="noopener noreferrer"
+              class="hero-cta cursor-hover inline-flex items-center gap-2 bg-ink text-base px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest text-[#0b0c10] hover:bg-accent transition-colors">
+              CV
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a href="https://drive.google.com/file/d/1OnQLFUk34UcBWbPzS71Yz7C29RgetDkd/view?usp=sharing" target="_blank"
+              rel="noopener noreferrer"
+              class="hero-cta cursor-hover inline-flex items-center gap-2 border border-white/15 px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest text-ink hover:border-accent hover:text-accent transition-colors">
+              Sertifikat
+            </a>
           </div>
-          <div class="w-16 h-7 bg-gradient-to-b from-neutral-200 to-neutral-400 rounded-[3px] -mt-1 shadow-md relative z-10 border border-black/10">
-            <div class="absolute inset-x-2 top-1/2 -translate-y-1/2 h-[3px] bg-neutral-600/40 rounded-full"></div>
-            <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-neutral-300 rotate-45 border border-black/10"></div>
-          </div>
-          <div id="badge-card" class="hero-photo-wrap relative w-60 sm:w-64 bg-neutral-100 rounded-md shadow-2xl p-3 pb-7 -mt-1 cursor-pointer">
-            <div class="relative w-full aspect-[4/5] overflow-hidden rounded-sm bg-neutral-800 ring-1 ring-black/10">
-              <img
-                src="pas photo fix 3.4 edit.jpg"
-                alt="Intan Budiarty portrait placeholder"
-                class="w-full h-full object-cover"
-                draggable="false"
-              />
-              <div id="badge-glare" class="pointer-events-none absolute inset-0 opacity-0" style="background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.55), transparent 60%); mix-blend-mode: overlay;"></div>
-              <div class="pointer-events-none absolute inset-0 ring-1 ring-white/10"></div>
+
+          <div class="hero-cta mt-16 grid grid-cols-3 max-w-sm gap-6 font-mono">
+            <div>
+              <p class="text-2xl text-ink"><span class="counter" data-target-num="7">0</span>+</p>
+              <p class="text-[11px] uppercase tracking-widest text-muted mt-1">Web Projects</p>
             </div>
-            <div class="text-center mt-3">
-              <p class="font-display text-sm font-semibold tracking-wide text-neutral-800">Intan Budiarty</p>
-              <p class="text-[9px] font-mono text-neutral-500 tracking-[0.15em] uppercase mt-0.5">Web Developer & Mentor</p>
+            <div>
+              <p class="text-2xl text-ink"><span class="counter" data-target-num="50">0</span>+</p>
+              <p class="text-[11px] uppercase tracking-widest text-muted mt-1">Students Mentored</p>
+            </div>
+            <div>
+              <p class="text-2xl text-ink"><span class="counter" data-target-num="3">0</span></p>
+              <p class="text-[11px] uppercase tracking-widest text-muted mt-1">Research & HKI</p>
             </div>
           </div>
         </div>
+
+        <!-- 3D POLAROID BADGE -->
+        <div id="badge-perspective" class="hero-cta relative flex justify-center items-start select-none mx-auto">
+          <div id="badge-swing" class="relative flex flex-col items-center" style="transform-origin: top center;">
+            <div class="w-2 h-2 rounded-full bg-neutral-600 mb-[-2px] z-20 shadow"></div>
+            <div
+              class="w-9 h-36 bg-gradient-to-b from-neutral-700 via-neutral-800 to-neutral-900 rounded-[3px] relative flex items-start justify-center shadow-lg border border-black/40">
+              <div class="absolute inset-y-2 left-1/2 -translate-x-1/2 w-[1px] bg-white/5"></div>
+              <span class="mt-4 text-[9px] font-mono font-medium tracking-[0.35em] text-neutral-400/90"
+                style="writing-mode: vertical-rl;">HELLO WORLD</span>
+            </div>
+            <div
+              class="w-16 h-7 bg-gradient-to-b from-neutral-200 to-neutral-400 rounded-[3px] -mt-1 shadow-md relative z-10 border border-black/10">
+              <div class="absolute inset-x-2 top-1/2 -translate-y-1/2 h-[3px] bg-neutral-600/40 rounded-full"></div>
+              <div
+                class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-neutral-300 rotate-45 border border-black/10">
+              </div>
+            </div>
+            <div id="badge-card"
+              class="hero-photo-wrap relative w-60 sm:w-64 bg-neutral-100 rounded-md shadow-2xl p-3 pb-7 -mt-1 cursor-pointer">
+              <div class="relative w-full aspect-[4/5] overflow-hidden rounded-sm bg-neutral-800 ring-1 ring-black/10">
+                <img src="pas photo fix 3.4 edit.jpg" alt="Intan Budiarty portrait placeholder"
+                  class="w-full h-full object-cover" draggable="false" />
+                <div id="badge-glare" class="pointer-events-none absolute inset-0 opacity-0"
+                  style="background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.55), transparent 60%); mix-blend-mode: overlay;">
+                </div>
+                <div class="pointer-events-none absolute inset-0 ring-1 ring-white/10"></div>
+              </div>
+              <div class="text-center mt-3">
+                <p class="font-display text-sm font-semibold tracking-wide text-neutral-800">Intan Budiarty</p>
+                <p class="text-[9px] font-mono text-neutral-500 tracking-[0.15em] uppercase mt-0.5">Web Developer &
+                  Mentor</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- scroll cue -->
-    <button data-target="about" class="dot-trigger cursor-hover absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors">
-      <span class="font-mono text-[10px] uppercase tracking-widest">Scroll</span>
-      <svg id="scroll-arrow" width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 1v16M2 12l5 5 5-5"/></svg>
-    </button>
-  </section>
+      <!-- scroll cue -->
+      <button data-target="about"
+        class="dot-trigger cursor-hover absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors">
+        <span class="font-mono text-[10px] uppercase tracking-widest">Scroll</span>
+        <svg id="scroll-arrow" width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor"
+          stroke-width="1.4">
+          <path d="M7 1v16M2 12l5 5 5-5" />
+        </svg>
+      </button>
+    </section>
 
-  <!-- ============ ABOUT & EXPERIENCE ============ -->
-  <section id="about" class="page-section relative flex flex-col justify-center px-6 lg:px-10 py-24">
-    <div class="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-16 items-start w-full">
-      
-      <!-- Left side: About text & Skills -->
-      <div class="lg:sticky top-24">
-        <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent mb-5">About Me</p>
-        <h2 class="reveal font-display text-4xl sm:text-5xl font-semibold text-ink leading-tight">
-          Bridging Systems, Code, & Education.
-        </h2>
-        <p class="reveal mt-6 text-muted leading-relaxed">
-          I am a Information Systems student at Universitas Bengkulu with a core focus on full-stack web development. I specialize in the Laravel framework, RESTful APIs, Single Page Applications (SPA), and Progressive Web Apps (PWA).
-        </p>
-        <p class="reveal mt-4 text-muted leading-relaxed">
-          Beyond building digital systems, I actively share my tech expertise by mentoring and instructing university programming practicals and contributing to digital community outreach projects.
-        </p>
+    <!-- ============ ABOUT & EXPERIENCE ============ -->
+    <section id="about" class="page-section relative flex flex-col justify-center px-6 lg:px-10 py-24">
+      <div class="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-16 items-start w-full">
 
-        <!-- Technical Skills List -->
-        <div class="reveal mt-8">
-          <h4 class="font-mono text-xs uppercase tracking-widest text-accent2 mb-4">Core Keahlian</h4>
-          <div class="flex flex-wrap gap-2 font-mono text-[11px]">
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Laravel Framework</span>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">JavaScript</span>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">HTML5 & CSS3</span>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Bootstrap</span>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Database Management</span>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Git & GitHub</span>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">UI/UX Design (Figma)</span>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">3D Blender</span>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Wondershare Filmora</span>
+        <!-- Left side: About text & Skills -->
+        <div class="lg:sticky top-24">
+          <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent mb-5">About Me</p>
+          <h2 class="reveal font-display text-4xl sm:text-5xl font-semibold text-ink leading-tight">
+            Bridging Systems, Code, & Education.
+          </h2>
+          <p class="reveal mt-6 text-muted leading-relaxed">
+            I am a Information Systems student at Universitas Bengkulu with a core focus on full-stack web development.
+            I specialize in the Laravel framework, RESTful APIs, Single Page Applications (SPA), and Progressive Web
+            Apps (PWA).
+          </p>
+          <p class="reveal mt-4 text-muted leading-relaxed">
+            Beyond building digital systems, I actively share my tech expertise by mentoring and instructing university
+            programming practicals and contributing to digital community outreach projects.
+          </p>
+
+          <!-- Technical Skills List -->
+          <div class="reveal mt-8">
+            <h4 class="font-mono text-xs uppercase tracking-widest text-accent2 mb-4">Core Keahlian</h4>
+            <div class="flex flex-wrap gap-2 font-mono text-[11px]">
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Laravel Framework</span>
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">JavaScript</span>
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">HTML5 & CSS3</span>
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Bootstrap</span>
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Database Management</span>
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Git & GitHub</span>
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">UI/UX Design
+                (Figma)</span>
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">3D Blender</span>
+              <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-md text-ink">Wondershare Filmora</span>
+            </div>
+          </div>
+
+          <div class="reveal mt-8 border-t border-white/10 pt-4 font-mono text-xs">
+            <span class="text-muted">Pendidikan:</span>
+            <p class="text-ink mt-1 font-body text-sm">Universitas Bengkulu — Program Studi Sistem Informasi <span
+                class="text-muted text-xs font-mono ml-2">(2022 - 2026)</span></p>
           </div>
         </div>
 
-        <div class="reveal mt-8 border-t border-white/10 pt-4 font-mono text-xs">
-          <span class="text-muted">Pendidikan:</span>
-          <p class="text-ink mt-1 font-body text-sm">Universitas Bengkulu — Program Studi Sistem Informasi <span class="text-muted text-xs font-mono ml-2">(2022 - 2026)</span></p>
+        <!-- Right side: Professional Experience Timeline -->
+        <div class="space-y-10">
+          <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent">Experience Timeline</p>
+
+          <div class="reveal border-l-2 border-white/10 pl-6 relative space-y-8">
+
+            <!-- Exp 1 -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-accent ring-4 ring-base"></span>
+              <span class="font-mono text-xs text-accent2">Agustus 2026</span>
+              <h3 class="text-xl font-semibold text-ink font-display mt-1">Anggota Tim Pengabdian Masyarakat — Media
+                Pembelajaran AR</h3>
+              <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Berpartisipasi dalam pengembangan media pembelajaran
+                berbasis Augmented Reality (AR) tentang Budaya Provinsi Bengkulu secara interaktif. Berkolaborasi dalam
+                penyusunan materi edukasi, pengembangan aplikasi, dan pengujian sistem.</p>
+            </div>
+
+            <!-- Exp 2 -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
+              <span class="font-mono text-xs text-muted">Desember 2025 - Februari 2026</span>
+              <h3 class="text-xl font-semibold text-ink font-display mt-1">Anggota Tim Pengabdian Masyarakat — Website
+                Bahan Ajar Guru SD</h3>
+              <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Meningkatkan kompetensi digital guru SD melalui
+                pelatihan pembuatan bahan ajar berbasis website mengenai wilayah pesisir. Memberikan pendampingan teknis
+                pengelolaan konten instruksional.</p>
+            </div>
+
+            <!-- Exp 3 -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
+              <span class="font-mono text-xs text-muted">Februari 2026 - Mei 2026</span>
+              <h3 class="text-xl font-semibold text-ink font-display mt-1">Asisten Praktikum — Pemrograman Web</h3>
+              <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Membimbing mahasiswa dalam memahami fondasi arsitektur
+                web modern dengan struktur kode bersih berbasis Laravel. Menangani debugging query, migrasi database,
+                routing, dan troubleshooting logika.</p>
+            </div>
+            <!-- Exp 3 -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
+              <span class="font-mono text-xs text-muted">Februari 2026 - Mei 2026</span>
+              <h3 class="text-xl font-semibold text-ink font-display mt-1">Asisten Praktikum — Intelligent Tutoring</h3>
+              <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Membimbing mahasiswa dalam merancang sistem
+                pembelajaran berbasis AI menggunakan pendekatan rule-based dan pemodelan adaptif.</p>
+            </div>
+
+            <!-- Exp 4 -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
+              <span class="font-mono text-xs text-muted">Februari 2025 - Juli 2025</span>
+              <h3 class="text-xl font-semibold text-ink font-display mt-1">Front-End & Back-End Developer Cohort</h3>
+              <p class="text-xs font-mono text-muted">Coding Camp Powered by DBS Foundation</p>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Menyelesaikan 10 modul pembelajaran mendalam dan
+                meluncurkan 7 proyek website mandiri/tim. Mempelajari manajemen RESTful API, database, penanganan
+                deployment, dan presentasi peer review.</p>
+            </div>
+
+            <!-- Exp 5 -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
+              <span class="font-mono text-xs text-muted">Februari 2025 - Mei 2025</span>
+              <h3 class="text-xl font-semibold text-ink font-display mt-1">Asisten Praktikum — Pemrograman Web &
+                E-Commerce</h3>
+              <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Membimbing 18 mahasiswa membangun platform e-commerce
+                fungsional berbasis Laravel framework dari awal hingga manajemen database.</p>
+            </div>
+
+            <!-- Exp 6 -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
+              <span class="font-mono text-xs text-muted">April 2025 - Desember 2025</span>
+              <h3 class="text-xl font-semibold text-ink font-display mt-1">Tenaga Pengolah Data Penelitian Internasional
+              </h3>
+              <p class="text-xs font-mono text-muted">Universitas Bengkulu - Universiti Malaya (Malaysia)</p>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Mengolah data riset pada proyek kolaborasi: "Adaptive
+                Learning Management System to Improve Computational Thinking Skills". Mengedit video diseminasi
+                menggunakan Filmora dan materi visual via Canva.</p>
+            </div>
+
+            <!-- Exp 7 -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
+              <span class="font-mono text-xs text-muted">Agustus 2024 - Desember 2024</span>
+              <h3 class="text-xl font-semibold text-ink font-display mt-1">Asisten Praktikum — Pemrograman Berorientasi
+                Objek (OOP)</h3>
+              <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Membimbing 37 mahasiswa memahami konsep OOP dasar
+                hingga lanjut menggunakan Java & Python, memecahkan bug software pattern, dan mengevaluasi project
+                akhir.</p>
+            </div>
+          </div>
+
         </div>
       </div>
+    </section>
 
-      <!-- Right side: Professional Experience Timeline -->
-      <div class="space-y-10">
-        <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent">Experience Timeline</p>
-        
-        <div class="reveal border-l-2 border-white/10 pl-6 relative space-y-8">
-          
-          <!-- Exp 1 -->
-          <div class="relative">
-            <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-accent ring-4 ring-base"></span>
-            <span class="font-mono text-xs text-accent2">Agustus 2026</span>
-            <h3 class="text-xl font-semibold text-ink font-display mt-1">Anggota Tim Pengabdian Masyarakat — Media Pembelajaran AR</h3>
-            <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
-            <p class="text-muted text-sm mt-2 leading-relaxed">Berpartisipasi dalam pengembangan media pembelajaran berbasis Augmented Reality (AR) tentang Budaya Provinsi Bengkulu secara interaktif. Berkolaborasi dalam penyusunan materi edukasi, pengembangan aplikasi, dan pengujian sistem.</p>
-          </div>
+    <!-- ============ PORTFOLIO / SELECTED WORK ============ -->
+    <section id="portfolio" class="page-section relative flex items-center px-6 lg:px-10 py-24">
+      <div class="max-w-6xl mx-auto w-full">
+        <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent mb-5">Selected work & Achievements</p>
+        <h2 class="reveal font-display text-4xl sm:text-5xl font-semibold text-ink mb-14">Projects & App Highlights</h2>
 
-          <!-- Exp 2 -->
-          <div class="relative">
-            <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
-            <span class="font-mono text-xs text-muted">Desember 2025 - Februari 2026</span>
-            <h3 class="text-xl font-semibold text-ink font-display mt-1">Anggota Tim Pengabdian Masyarakat — Website Bahan Ajar Guru SD</h3>
-            <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
-            <p class="text-muted text-sm mt-2 leading-relaxed">Meningkatkan kompetensi digital guru SD melalui pelatihan pembuatan bahan ajar berbasis website mengenai wilayah pesisir. Memberikan pendampingan teknis pengelolaan konten instruksional.</p>
-          </div>
+        <div class="grid sm:grid-cols-2 gap-6">
 
-          <!-- Exp 3 -->
-          <div class="relative">
-            <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
-            <span class="font-mono text-xs text-muted">Februari 2026 - Mei 2026</span>
-            <h3 class="text-xl font-semibold text-ink font-display mt-1">Asisten Praktikum — Pemrograman Web</h3>
-            <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
-            <p class="text-muted text-sm mt-2 leading-relaxed">Membimbing mahasiswa dalam memahami fondasi arsitektur web modern dengan struktur kode bersih berbasis Laravel. Menangani debugging query, migrasi database, routing, dan troubleshooting logika.</p>
-          </div>
-          <!-- Exp 3 -->
-          <div class="relative">
-            <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
-            <span class="font-mono text-xs text-muted">Februari 2026 - Mei 2026</span>
-            <h3 class="text-xl font-semibold text-ink font-display mt-1">Asisten Praktikum — Intelligent Tutoring</h3>
-            <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
-            <p class="text-muted text-sm mt-2 leading-relaxed">Membimbing mahasiswa dalam merancang sistem pembelajaran berbasis AI menggunakan pendekatan rule-based dan pemodelan adaptif.</p>
-          </div>
+          <!-- Project 1 -->
+          <article
+            onclick="openVideoModal('https://drive.google.com/file/d/1k9fOZbXXzVVdRv7BlaDb1bVu00QLp1_b/view?usp=sharing', 'SI Capaian Pembelajaran Lulusan (CPL)', 'Sistem informasi evaluasi kurikulum berbasis Outcome-Based Education (OBE). Fitur pemetaan otomatis CPL & CPMK, serta implementasi Rule-Based System untuk rekomendasi profil karier lulusan.', 'Thesis System', 'Web App')"
+            class="project-card reveal cursor-hover group relative border border-white/10 rounded-xl p-6 overflow-hidden hover:border-accent/50 transition-colors">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-xs text-muted">01</span>
+              <span class="font-mono text-[10px] uppercase tracking-widest text-accent2">Thesis System / Web App</span>
+            </div>
+            <h3 class="font-display text-2xl mt-6 text-ink group-hover:text-accent transition-colors">SI Capaian
+              Pembelajaran Lulusan (CPL)</h3>
+            <p class="text-muted text-sm mt-3 leading-relaxed">Sistem informasi evaluasi kurikulum berbasis
+              Outcome-Based Education (OBE). Fitur pemetaan otomatis CPL & CPMK, serta implementasi Rule-Based System
+              untuk rekomendasi profil karier lulusan.</p>
+            <div class="flex gap-2 mt-5 font-mono text-[10px] uppercase tracking-wide text-muted">
+              <span class="px-2 py-1 border border-white/10 rounded-full">Laravel</span>
+              <span class="px-2 py-1 border border-white/10 rounded-full">Bootstrap</span>
+              <span class="px-2 py-1 border border-white/10 rounded-full">Rule-Based AI</span>
+              <span class="px-2 py-1 border border-white/10 rounded-full">MySQL</span>
+            </div>
+            <div
+              class="mt-6 flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-accent group-hover:text-accent2 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="inline">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              Tonton Demo Video
+            </div>
+          </article>
 
-          <!-- Exp 4 -->
-          <div class="relative">
-            <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
-            <span class="font-mono text-xs text-muted">Februari 2025 - Juli 2025</span>
-            <h3 class="text-xl font-semibold text-ink font-display mt-1">Front-End & Back-End Developer Cohort</h3>
-            <p class="text-xs font-mono text-muted">Coding Camp Powered by DBS Foundation</p>
-            <p class="text-muted text-sm mt-2 leading-relaxed">Menyelesaikan 10 modul pembelajaran mendalam dan meluncurkan 7 proyek website mandiri/tim. Mempelajari manajemen RESTful API, database, penanganan deployment, dan presentasi peer review.</p>
-          </div>
+          <!-- Project 2 -->
+          <article
+            onclick="openVideoModal('https://drive.google.com/file/d/1YF5zmevkYir33Z5ijPmJiZHtGl9iN30M/view?usp=sharing', 'Website Bahan Ajar berbasis Kearifan Lokal Pesisir Bengkulu', 'Pengabdian Pelatihan Penyusunan Bahan Ajar berbasis Kearifan Lokal Pesisir Bengkulu', 'Pengabdian Masyarakat', 'Web App')"
+            class="project-card reveal cursor-hover group relative border border-white/10 rounded-xl p-6 overflow-hidden hover:border-accent/50 transition-colors">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-xs text-muted">02</span>
+              <span class="font-mono text-[10px] uppercase tracking-widest text-accent2">Intellectual Property /
+                HKI</span>
+            </div>
+            <h3 class="font-display text-2xl mt-6 text-ink group-hover:text-accent transition-colors">Website Edukasi
+              Pesisir</h3>
+            <p class="text-muted text-sm mt-3 leading-relaxed">Karya digital terdaftar Hak Cipta resmi yang digunakan
+              sebagai platform media pembelajaran interaktif dan literasi lingkungan wilayah pesisir bagi siswa sekolah
+              dasar.</p>
+            <div class="flex gap-2 mt-5 font-mono text-[10px] uppercase tracking-wide text-muted">
+              <span class="px-2 py-1 border border-white/10 rounded-full">Web App</span>
+              <span class="px-2 py-1 border border-white/10 rounded-full">HKI Certified</span>
+              <span class="px-2 py-1 border border-white/10 rounded-full">Education</span>
+            </div>
+            <div
+              class="mt-6 flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-accent group-hover:text-accent2 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="inline">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              Tonton Demo Video
+            </div>
+          </article>
 
-          <!-- Exp 5 -->
-          <div class="relative">
-            <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
-            <span class="font-mono text-xs text-muted">Februari 2025 - Mei 2025</span>
-            <h3 class="text-xl font-semibold text-ink font-display mt-1">Asisten Praktikum — Pemrograman Web & E-Commerce</h3>
-            <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
-            <p class="text-muted text-sm mt-2 leading-relaxed">Membimbing 18 mahasiswa membangun platform e-commerce fungsional berbasis Laravel framework dari awal hingga manajemen database.</p>
-          </div>
+          <!-- Project 3 -->
+          <article
+            onclick="openVideoModal('https://drive.google.com/file/d/19roOdyBu7vxMndXUNB1FmD8gTSz3jFFN/view?usp=sharing', 'smartDerm — Skin Disease Detection', 'Website pendeteksi penyakit kulit pada manusia yang terintegrasi dengan model Machine Learning (Image Classification) dan dilengkapi dengan Public API untuk integrasi pihak ketiga. Membantu pengguna melakukan deteksi awal penyakit kulit secara cepat dan mudah melalui unggahan foto.', 'DBS Coding Camp', 'Capstone Project')"
+            class="project-card reveal cursor-hover group relative border border-white/10 rounded-xl p-6 overflow-hidden hover:border-accent/50 transition-colors">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-xs text-muted">03</span>
+              <span class="font-mono text-[10px] uppercase tracking-widest text-accent2">DBS Coding Camp</span>
+            </div>
+            <h3 class="font-display text-2xl mt-6 text-ink group-hover:text-accent transition-colors">smartDerm
+              (Capstone Project)</h3>
+            <p class="text-muted text-sm mt-3 leading-relaxed">Website pendeteksi penyakit kulit pada manusia yang
+              terintegrasi dengan Machine Learning dan juga dilengkapi dengan Public API. Project ini dideploy dan
+              dirancang sebagai Capstone Project program DBS Foundation.</p>
+            <div class="flex flex-wrap gap-2 mt-5 font-mono text-[10px] uppercase tracking-wide text-muted">
+              <span class="px-2 py-1 border border-white/10 rounded-full">JavaScript</span>
+              <span class="px-2 py-1 border border-white/10 rounded-full">Machine Learning</span>
+              <span class="px-2 py-1 border border-white/10 rounded-full">REST API</span>
+              <span class="px-2 py-1 border border-white/10 rounded-full">Deployment</span>
+            </div>
+            <div
+              class="mt-6 flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-accent group-hover:text-accent2 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="inline">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              Tonton Demo Video
+            </div>
+          </article>
 
-          <!-- Exp 6 -->
-          <div class="relative">
-            <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
-            <span class="font-mono text-xs text-muted">April 2025 - Desember 2025</span>
-            <h3 class="text-xl font-semibold text-ink font-display mt-1">Tenaga Pengolah Data Penelitian Internasional</h3>
-            <p class="text-xs font-mono text-muted">Universitas Bengkulu - Universiti Malaya (Malaysia)</p>
-            <p class="text-muted text-sm mt-2 leading-relaxed">Mengolah data riset pada proyek kolaborasi: "Adaptive Learning Management System to Improve Computational Thinking Skills". Mengedit video diseminasi menggunakan Filmora dan materi visual via Canva.</p>
-          </div>
-
-          <!-- Exp 7 -->
-          <div class="relative">
-            <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-neutral-600 ring-4 ring-base"></span>
-            <span class="font-mono text-xs text-muted">Agustus 2024 - Desember 2024</span>
-            <h3 class="text-xl font-semibold text-ink font-display mt-1">Asisten Praktikum — Pemrograman Berorientasi Objek (OOP)</h3>
-            <p class="text-xs font-mono text-muted">Universitas Bengkulu</p>
-            <p class="text-muted text-sm mt-2 leading-relaxed">Membimbing 37 mahasiswa memahami konsep OOP dasar hingga lanjut menggunakan Java & Python, memecahkan bug software pattern, dan mengevaluasi project akhir.</p>
-          </div>
+          <!-- Project 4 / Awards Section mapped visually -->
+          <article
+            class="project-card reveal cursor-hover group relative border border-accent/20 rounded-xl p-6 overflow-hidden bg-white/[0.01] hover:border-accent2/50 transition-colors">
+            <div class="flex items-start justify-between">
+              <span class="font-mono text-xs text-accent2">AWARDS</span>
+              <span class="font-mono text-[10px] uppercase tracking-widest text-accent">Honors</span>
+            </div>
+            <h3 class="font-display text-2xl mt-6 text-ink">Prestasi & Penghargaan</h3>
+            <ul class="text-muted text-xs mt-3 space-y-2 font-mono">
+              <li class="text-ink">🏆 Best System Project — Capstone Project PPSI UNIB (2025)</li>
+              <li class="text-ink">⭐️ Penghargaan Kontribusi Akreditasi Prodi (Sistem OBE/CPL) (2025)</li>
+              <li class="text-ink">⚡️ Penerima Beasiswa Prestasi Provinsi Bengkulu (2023)</li>
+            </ul>
+          </article>
         </div>
 
-      </div>
-    </div>
-  </section>
+        <!-- ============ CERTIFICATES SECTION (COMPACT & ROW ALIGNED) ============ -->
+        <section id="certificates" class="mt-16 relative">
+          <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6">Certificates</p>
 
-  <!-- ============ PORTFOLIO / SELECTED WORK ============ -->
-  <section id="portfolio" class="page-section relative flex items-center px-6 lg:px-10 py-24">
-    <div class="max-w-6xl mx-auto w-full">
-      <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent mb-5">Selected work & Achievements</p>
-      <h2 class="reveal font-display text-4xl sm:text-5xl font-semibold text-ink mb-14">Projects & App Highlights</h2>
+          <!-- Layout Grid: 2 Kolom di layar medium ke atas untuk efisiensi ruang -->
+          <div class="grid md:grid-cols-2 gap-4">
 
-      <div class="grid sm:grid-cols-2 gap-6">
-        
-        <!-- Project 1 -->
-        <article class="project-card reveal cursor-hover group relative border border-white/10 rounded-xl p-6 overflow-hidden hover:border-accent/50 transition-colors">
-          <div class="flex items-start justify-between">
-            <span class="font-mono text-xs text-muted">01</span>
-            <span class="font-mono text-[10px] uppercase tracking-widest text-accent2">Thesis System / Web App</span>
+            <!-- Certificate 1 -->
+            <article
+              class="reveal cursor-hover group flex items-center gap-4 border border-white/5 rounded-lg p-3 bg-white/[0.02] hover:border-accent/30 hover:bg-white/[0.04] transition-all duration-300"
+              onclick="openCertModal('https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=1200&q=80', 'Best System Project — Capstone Project PPSI UNIBs')">
+              <!-- Thumbnail Kecil Sejajar -->
+              <div
+                class="relative w-24 aspect-[16/10] shrink-0 rounded bg-neutral-900 border border-white/5 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=300&q=80"
+                  alt="Best System Project"
+                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" />
+              </div>
+              <!-- Teks Informasi Singkat -->
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[9px] uppercase tracking-wider text-accent">2025</span>
+                  <span class="text-[9px] font-mono text-muted/60 uppercase">🏆 Award</span>
+                </div>
+                <h3
+                  class="font-display text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors mt-0.5">
+                  Best System Project — PPSI UNIBs</h3>
+              </div>
+            </article>
+
+            <!-- Certificate 2 -->
+            <article
+              class="reveal cursor-hover group flex items-center gap-4 border border-white/5 rounded-lg p-3 bg-white/[0.02] hover:border-accent/30 hover:bg-white/[0.04] transition-all duration-300"
+              onclick="openCertModal('https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=80', 'Laravel & PHP Beginner')">
+              <div
+                class="relative w-24 aspect-[16/10] shrink-0 rounded bg-neutral-900 border border-white/5 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=300&q=80"
+                  alt="Laravel Certificate"
+                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[9px] uppercase tracking-wider text-accent">2024</span>
+                  <span class="text-[9px] font-mono text-muted/60 uppercase">💻 Course</span>
+                </div>
+                <h3
+                  class="font-display text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors mt-0.5">
+                  Laravel & PHP Beginner</h3>
+              </div>
+            </article>
+
+            <!-- Certificate 3 -->
+            <article
+              class="reveal cursor-hover group flex items-center gap-4 border border-white/5 rounded-lg p-3 bg-white/[0.02] hover:border-accent/30 hover:bg-white/[0.04] transition-all duration-300"
+              onclick="openCertModal('https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1200&q=80', 'Responsive Web Design')">
+              <div
+                class="relative w-24 aspect-[16/10] shrink-0 rounded bg-neutral-900 border border-white/5 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=300&q=80"
+                  alt="Responsive Web Design"
+                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[9px] uppercase tracking-wider text-accent">2023</span>
+                  <span class="text-[9px] font-mono text-muted/60 uppercase">🎨 UI/UX</span>
+                </div>
+                <h3
+                  class="font-display text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors mt-0.5">
+                  Responsive Web Design</h3>
+              </div>
+            </article>
+
+            <!-- Certificate 4 -->
+            <article
+              class="reveal cursor-hover group flex items-center gap-4 border border-white/5 rounded-lg p-3 bg-white/[0.02] hover:border-accent/30 hover:bg-white/[0.04] transition-all duration-300"
+              onclick="openCertModal('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80', 'Mentorship & Community Leadership')">
+              <div
+                class="relative w-24 aspect-[16/10] shrink-0 rounded bg-neutral-900 border border-white/5 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=300&q=80"
+                  alt="Mentorship & Leadership"
+                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[9px] uppercase tracking-wider text-accent">2022</span>
+                  <span class="text-[9px] font-mono text-muted/60 uppercase">👥 Leadership</span>
+                </div>
+                <h3
+                  class="font-display text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors mt-0.5">
+                  Mentorship & Community Leadership</h3>
+              </div>
+            </article>
+
           </div>
-          <h3 class="font-display text-2xl mt-6 text-ink group-hover:text-accent transition-colors">SI Capaian Pembelajaran Lulusan (CPL)</h3>
-          <p class="text-muted text-sm mt-3 leading-relaxed">Sistem informasi evaluasi kurikulum berbasis Outcome-Based Education (OBE). Fitur pemetaan otomatis CPL & CPMK, serta implementasi Rule-Based System untuk rekomendasi profil karier lulusan.</p>
-          <div class="flex gap-2 mt-5 font-mono text-[10px] uppercase tracking-wide text-muted">
-            <span class="px-2 py-1 border border-white/10 rounded-full">Laravel</span>
-            <span class="px-2 py-1 border border-white/10 rounded-full">Bootstrap</span>
-            <span class="px-2 py-1 border border-white/10 rounded-full">Rule-Based AI</span>
-            <span class="px-2 py-1 border border-white/10 rounded-full">MySQL</span>
+
+          <!-- MODAL CONTAINER (Tetap sama untuk menampilkan ukuran besar saat di-klik) -->
+          <div id="cert-modal"
+            class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-base/90 backdrop-blur-md opacity-0 transition-opacity duration-300"
+            onclick="closeCertModal()">
+            <button class="absolute top-6 right-6 text-muted hover:text-ink transition-colors"
+              onclick="closeCertModal()">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <div class="max-w-4xl max-h-[85vh] relative flex flex-col items-center" onclick="event.stopPropagation()">
+              <img id="modal-img" src="" alt="Certificate Large View"
+                class="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/10" />
+              <p id="modal-caption" class="text-ink font-display text-base mt-4 text-center tracking-wide font-medium">
+              </p>
+            </div>
           </div>
-        </article>
 
-        <!-- Project 2 -->
-        <article class="project-card reveal cursor-hover group relative border border-white/10 rounded-xl p-6 overflow-hidden hover:border-accent/50 transition-colors">
-          <div class="flex items-start justify-between">
-            <span class="font-mono text-xs text-muted">02</span>
-            <span class="font-mono text-[10px] uppercase tracking-widest text-accent2">Intellectual Property / HKI</span>
+          <!-- VIDEO MODAL CONTAINER -->
+          <div id="video-modal"
+            class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-base/95 backdrop-blur-md opacity-0 transition-opacity duration-300"
+            onclick="closeVideoModal()">
+            <button class="absolute top-6 right-6 text-muted hover:text-ink transition-colors z-[110]"
+              onclick="closeVideoModal()">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <div
+              class="w-full max-w-4xl max-h-[90vh] relative flex flex-col items-center bg-[#111319]/90 border border-white/10 rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-sm"
+              onclick="event.stopPropagation()">
+              <div class="w-full aspect-video rounded-lg overflow-hidden bg-black border border-white/5 relative">
+                <video id="project-video" controls muted class="w-full h-full object-contain">
+                  Browser Anda tidak mendukung tag video.
+                </video>
+                <iframe id="project-iframe" class="w-full h-full hidden" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              </div>
+              <div class="w-full mt-4 text-left">
+                <div class="flex items-center gap-2">
+                  <span id="video-tag1" class="font-mono text-[10px] uppercase tracking-[0.25em] text-accent">DBS Coding
+                    Camp</span>
+                  <span id="video-tag2" class="font-mono text-[10px] uppercase tracking-[0.25em] text-accent2">Capstone
+                    Project</span>
+                </div>
+                <h3 id="video-title" class="font-display text-2xl mt-2 text-ink font-semibold">smartDerm — Skin Disease
+                  Detection</h3>
+                <p id="video-description" class="text-muted text-sm mt-2 leading-relaxed">
+                  Website pendeteksi penyakit kulit pada manusia yang terintegrasi dengan model Machine Learning (Image
+                  Classification) dan dilengkapi dengan Public API untuk integrasi pihak ketiga. Membantu pengguna
+                  melakukan deteksi awal penyakit kulit secara cepat dan mudah melalui unggahan foto.
+                </p>
+              </div>
+            </div>
           </div>
-          <h3 class="font-display text-2xl mt-6 text-ink group-hover:text-accent transition-colors">Website Edukasi Pesisir</h3>
-          <p class="text-muted text-sm mt-3 leading-relaxed">Karya digital terdaftar Hak Cipta resmi yang digunakan sebagai platform media pembelajaran interaktif dan literasi lingkungan wilayah pesisir bagi siswa sekolah dasar.</p>
-          <div class="flex gap-2 mt-5 font-mono text-[10px] uppercase tracking-wide text-muted">
-            <span class="px-2 py-1 border border-white/10 rounded-full">Web App</span>
-            <span class="px-2 py-1 border border-white/10 rounded-full">HKI Certified</span>
-            <span class="px-2 py-1 border border-white/10 rounded-full">Education</span>
+        </section>
+
+        <!-- ============ CONTACT ============ -->
+        <section id="contact" class="page-section relative flex items-center px-6 lg:px-10 py-24">
+          <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 w-full">
+            <div>
+              <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent mb-5">Contact</p>
+              <h2 class="reveal font-display text-4xl sm:text-5xl font-semibold text-ink leading-tight">
+                Let's connect and<br /> build together.
+              </h2>
+              <p class="reveal mt-6 text-muted leading-relaxed max-w-md">
+                Terbuka untuk kolaborasi project fullstack/front-end development, peluang kerja sama, atau mentoring
+                programming. Hubungi saya langsung melalui jaringan digital berikut.
+              </p>
+
+              <div class="reveal mt-10 flex flex-col gap-4 font-mono text-sm">
+                <a href="mailto:intanbudiarty03@gmail.com"
+                  class="cursor-hover flex items-center gap-3 text-ink hover:text-accent transition-colors w-fit">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M4 4h16v16H4z" />
+                    <path d="m4 6 8 7 8-7" />
+                  </svg>
+                  intanbudiarty03@gmail.com
+                </a>
+                <a href="tel:083176657394"
+                  class="cursor-hover flex items-center gap-3 text-ink hover:text-accent transition-colors w-fit">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                  0831 7665 7394
+                </a>
+                <a href="https://linkedin.com/in/intan-budiarty-35bb1a334" target="_blank"
+                  class="cursor-hover flex items-center gap-3 text-ink hover:text-accent transition-colors w-fit">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                  linkedin.com/in/intan-budiarty
+                </a>
+                <a href="https://github.com/intanbudiarty" target="_blank"
+                  class="cursor-hover flex items-center gap-3 text-ink hover:text-accent transition-colors w-fit">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path
+                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C7.5 2.8 6.4 3.1 6.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 5 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />
+                  </svg>
+                  github.com/intanbudiarty
+                </a>
+              </div>
+            </div>
+
+            <form class="reveal flex flex-col gap-5" onsubmit="return false;">
+              <div>
+                <label class="font-mono text-[11px] uppercase tracking-widest text-muted">Name</label>
+                <input type="text" placeholder="Your name"
+                  class="mt-2 w-full bg-transparent border border-white/15 rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-accent transition-colors" />
+              </div>
+              <div>
+                <label class="font-mono text-[11px] uppercase tracking-widest text-muted">Email</label>
+                <input type="email" placeholder="you@example.com"
+                  class="mt-2 w-full bg-transparent border border-white/15 rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-accent transition-colors" />
+              </div>
+              <div>
+                <label class="font-mono text-[11px] uppercase tracking-widest text-muted">Message</label>
+                <textarea rows="4" placeholder="Tell me about your project or inquiry"
+                  class="mt-2 w-full bg-transparent border border-white/15 rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-accent transition-colors resize-none"></textarea>
+              </div>
+              <button type="submit"
+                class="cursor-hover mt-2 inline-flex items-center justify-center gap-2 bg-ink text-[#0b0c10] font-mono text-xs uppercase tracking-widest px-6 py-3.5 rounded-full hover:bg-accent transition-colors">
+                Send message
+              </button>
+            </form>
           </div>
-        </article>
+        </section>
 
-        <!-- Project 3 -->
-        <article class="project-card reveal cursor-hover group relative border border-white/10 rounded-xl p-6 overflow-hidden hover:border-accent/50 transition-colors">
-          <div class="flex items-start justify-between">
-            <span class="font-mono text-xs text-muted">03</span>
-            <span class="font-mono text-[10px] uppercase tracking-widest text-accent2">DBS Coding Camp</span>
+        <footer class="relative z-10 border-t border-white/5 py-8">
+          <div
+            class="max-w-6xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-[11px] uppercase tracking-widest text-muted">
+            <span>&copy; 2026 Intan Budiarty</span>
+            <span>Built with Tailwind CSS &amp; GSAP</span>
           </div>
-          <h3 class="font-display text-2xl mt-6 text-ink group-hover:text-accent transition-colors">7 Capstone Web Applications</h3>
-          <p class="text-muted text-sm mt-3 leading-relaxed">Rangkaian aplikasi web responsif berskala fungsional yang dibangun selama program DBS Foundation, mengintegrasikan implementasi native/framework API, database relasional, dan live deployment.</p>
-          <div class="flex gap-2 mt-5 font-mono text-[10px] uppercase tracking-wide text-muted">
-            <span class="px-2 py-1 border border-white/10 rounded-full">JavaScript</span>
-            <span class="px-2 py-1 border border-white/10 rounded-full">REST API</span>
-            <span class="px-2 py-1 border border-white/10 rounded-full">Deployment</span>
-          </div>
-        </article>
+        </footer>
+  </main>
 
-        <!-- Project 4 / Awards Section mapped visually -->
-        <article class="project-card reveal cursor-hover group relative border border-accent/20 rounded-xl p-6 overflow-hidden bg-white/[0.01] hover:border-accent2/50 transition-colors">
-          <div class="flex items-start justify-between">
-            <span class="font-mono text-xs text-accent2">AWARDS</span>
-            <span class="font-mono text-[10px] uppercase tracking-widest text-accent">Honors</span>
-          </div>
-          <h3 class="font-display text-2xl mt-6 text-ink">Prestasi & Penghargaan</h3>
-          <ul class="text-muted text-xs mt-3 space-y-2 font-mono">
-            <li class="text-ink">🏆 Best System Project — Capstone Project PPSI UNIB (2025)</li>
-            <li class="text-ink">⭐️ Penghargaan Kontribusi Akreditasi Prodi (Sistem OBE/CPL) (2025)</li>
-            <li class="text-ink">⚡️ Penerima Beasiswa Prestasi Provinsi Bengkulu (2023)</li>
-          </ul>
-        </article>
-      </div>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    <!-- ============ CERTIFICATES SECTION (COMPACT & ROW ALIGNED) ============ -->
-<section id="certificates" class="mt-16 relative">
-  <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent mb-6">Certificates</p>
-  
-  <!-- Layout Grid: 2 Kolom di layar medium ke atas untuk efisiensi ruang -->
-  <div class="grid md:grid-cols-2 gap-4">
-    
-    <!-- Certificate 1 -->
-    <article class="reveal cursor-hover group flex items-center gap-4 border border-white/5 rounded-lg p-3 bg-white/[0.02] hover:border-accent/30 hover:bg-white/[0.04] transition-all duration-300" 
-             onclick="openCertModal('https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=1200&q=80', 'Best System Project — Capstone Project PPSI UNIBs')">
-      <!-- Thumbnail Kecil Sejajar -->
-      <div class="relative w-24 aspect-[16/10] shrink-0 rounded bg-neutral-900 border border-white/5 overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=300&q=80" 
-             alt="Best System Project" 
-             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" />
-      </div>
-      <!-- Teks Informasi Singkat -->
-      <div class="min-w-0">
-        <div class="flex items-center gap-2">
-          <span class="font-mono text-[9px] uppercase tracking-wider text-accent">2025</span>
-          <span class="text-[9px] font-mono text-muted/60 uppercase">🏆 Award</span>
-        </div>
-        <h3 class="font-display text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors mt-0.5">Best System Project — PPSI UNIBs[cite: 2]</h3>
-      </div>
-    </article>
+    // ---------------------------------------------------------
+    // 1. NAVIGATION — smooth scroll between "pages" + active state
+    // ---------------------------------------------------------
+    const sectionIds = ['home', 'about', 'portfolio', 'certificates', 'contact'];
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pageDots = document.querySelectorAll('.page-dot');
 
-    <!-- Certificate 2 -->
-    <article class="reveal cursor-hover group flex items-center gap-4 border border-white/5 rounded-lg p-3 bg-white/[0.02] hover:border-accent/30 hover:bg-white/[0.04] transition-all duration-300"
-             onclick="openCertModal('https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=80', 'Laravel & PHP Beginner')">
-      <div class="relative w-24 aspect-[16/10] shrink-0 rounded bg-neutral-900 border border-white/5 overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=300&q=80" 
-             alt="Laravel Certificate" 
-             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" />
-      </div>
-      <div class="min-w-0">
-        <div class="flex items-center gap-2">
-          <span class="font-mono text-[9px] uppercase tracking-wider text-accent">2024</span>
-          <span class="text-[9px] font-mono text-muted/60 uppercase">💻 Course</span>
-        </div>
-        <h3 class="font-display text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors mt-0.5">Laravel & PHP Beginner[cite: 2]</h3>
-      </div>
-    </article>
-
-    <!-- Certificate 3 -->
-    <article class="reveal cursor-hover group flex items-center gap-4 border border-white/5 rounded-lg p-3 bg-white/[0.02] hover:border-accent/30 hover:bg-white/[0.04] transition-all duration-300"
-             onclick="openCertModal('https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1200&q=80', 'Responsive Web Design')">
-      <div class="relative w-24 aspect-[16/10] shrink-0 rounded bg-neutral-900 border border-white/5 overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=300&q=80" 
-             alt="Responsive Web Design" 
-             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" />
-      </div>
-      <div class="min-w-0">
-        <div class="flex items-center gap-2">
-          <span class="font-mono text-[9px] uppercase tracking-wider text-accent">2023</span>
-          <span class="text-[9px] font-mono text-muted/60 uppercase">🎨 UI/UX</span>
-        </div>
-        <h3 class="font-display text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors mt-0.5">Responsive Web Design[cite: 2]</h3>
-      </div>
-    </article>
-
-    <!-- Certificate 4 -->
-    <article class="reveal cursor-hover group flex items-center gap-4 border border-white/5 rounded-lg p-3 bg-white/[0.02] hover:border-accent/30 hover:bg-white/[0.04] transition-all duration-300"
-             onclick="openCertModal('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80', 'Mentorship & Community Leadership')">
-      <div class="relative w-24 aspect-[16/10] shrink-0 rounded bg-neutral-900 border border-white/5 overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=300&q=80" 
-             alt="Mentorship & Leadership" 
-             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300" />
-      </div>
-      <div class="min-w-0">
-        <div class="flex items-center gap-2">
-          <span class="font-mono text-[9px] uppercase tracking-wider text-accent">2022</span>
-          <span class="text-[9px] font-mono text-muted/60 uppercase">👥 Leadership</span>
-        </div>
-        <h3 class="font-display text-sm font-semibold text-ink truncate group-hover:text-accent transition-colors mt-0.5">Mentorship & Community Leadership[cite: 2]</h3>
-      </div>
-    </article>
-
-  </div>
-
-  <!-- MODAL CONTAINER (Tetap sama untuk menampilkan ukuran besar saat di-klik) -->
-  <div id="cert-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-base/90 backdrop-blur-md opacity-0 transition-opacity duration-300" onclick="closeCertModal()">
-    <button class="absolute top-6 right-6 text-muted hover:text-ink transition-colors" onclick="closeCertModal()">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <div class="max-w-4xl max-h-[85vh] relative flex flex-col items-center" onclick="event.stopPropagation()">
-      <img id="modal-img" src="" alt="Certificate Large View" class="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/10" />
-      <p id="modal-caption" class="text-ink font-display text-base mt-4 text-center tracking-wide font-medium"></p>
-    </div>
-  </div>
-</section>
-
-  <!-- ============ CONTACT ============ -->
-  <section id="contact" class="page-section relative flex items-center px-6 lg:px-10 py-24">
-    <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 w-full">
-      <div>
-        <p class="reveal font-mono text-xs uppercase tracking-[0.3em] text-accent mb-5">Contact</p>
-        <h2 class="reveal font-display text-4xl sm:text-5xl font-semibold text-ink leading-tight">
-          Let's connect and<br/> build together.
-        </h2>
-        <p class="reveal mt-6 text-muted leading-relaxed max-w-md">
-          Terbuka untuk kolaborasi project fullstack/front-end development, peluang kerja sama, atau mentoring programming. Hubungi saya langsung melalui jaringan digital berikut.
-        </p>
-
-        <div class="reveal mt-10 flex flex-col gap-4 font-mono text-sm">
-          <a href="mailto:intanbudiarty03@gmail.com" class="cursor-hover flex items-center gap-3 text-ink hover:text-accent transition-colors w-fit">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>
-            intanbudiarty03@gmail.com
-          </a>
-          <a href="tel:083176657394" class="cursor-hover flex items-center gap-3 text-ink hover:text-accent transition-colors w-fit">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            0831 7665 7394
-          </a>
-          <a href="https://linkedin.com/in/intan-budiarty-35bb1a334" target="_blank" class="cursor-hover flex items-center gap-3 text-ink hover:text-accent transition-colors w-fit">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            linkedin.com/in/intan-budiarty
-          </a>
-          <a href="https://github.com/intanbudiarty" target="_blank" class="cursor-hover flex items-center gap-3 text-ink hover:text-accent transition-colors w-fit">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C7.5 2.8 6.4 3.1 6.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 5 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
-            github.com/intanbudiarty
-          </a>
-        </div>
-      </div>
-
-      <form class="reveal flex flex-col gap-5" onsubmit="return false;">
-        <div>
-          <label class="font-mono text-[11px] uppercase tracking-widest text-muted">Name</label>
-          <input type="text" placeholder="Your name" class="mt-2 w-full bg-transparent border border-white/15 rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-accent transition-colors" />
-        </div>
-        <div>
-          <label class="font-mono text-[11px] uppercase tracking-widest text-muted">Email</label>
-          <input type="email" placeholder="you@example.com" class="mt-2 w-full bg-transparent border border-white/15 rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-accent transition-colors" />
-        </div>
-        <div>
-          <label class="font-mono text-[11px] uppercase tracking-widest text-muted">Message</label>
-          <textarea rows="4" placeholder="Tell me about your project or inquiry" class="mt-2 w-full bg-transparent border border-white/15 rounded-lg px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-accent transition-colors resize-none"></textarea>
-        </div>
-        <button type="submit" class="cursor-hover mt-2 inline-flex items-center justify-center gap-2 bg-ink text-[#0b0c10] font-mono text-xs uppercase tracking-widest px-6 py-3.5 rounded-full hover:bg-accent transition-colors">
-          Send message
-        </button>
-      </form>
-    </div>
-  </section>
-
-  <footer class="relative z-10 border-t border-white/5 py-8">
-    <div class="max-w-6xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-[11px] uppercase tracking-widest text-muted">
-      <span>&copy; 2026 Intan Budiarty</span>
-      <span>Built with Tailwind CSS &amp; GSAP</span>
-    </div>
-  </footer>
-</main>
-
-<script>
-  gsap.registerPlugin(ScrollTrigger);
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // ---------------------------------------------------------
-  // 1. NAVIGATION — smooth scroll between "pages" + active state
-  // ---------------------------------------------------------
-  const sectionIds = ['home', 'about', 'portfolio', 'certificates', 'contact'];
-  const navLinks = document.querySelectorAll('.nav-link');
-  const pageDots = document.querySelectorAll('.page-dot');
-
-  function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const offset = 88;
-    const top = window.pageYOffset + el.getBoundingClientRect().top - offset;
-    window.scrollTo({ top, behavior: 'smooth' });
-  }
-
-  function setActive(id) {
-    navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === id));
-    pageDots.forEach(d => d.classList.toggle('active', d.dataset.dot === id));
-  }
-
-  document.querySelectorAll('.nav-trigger, .dot-trigger').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = el.dataset.target || el.dataset.dot;
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (mobileMenu && !mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
-      setActive(target);
-      scrollToSection(target);
-    });
-  });
-
-  document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-    document.getElementById('mobile-menu').classList.toggle('hidden');
-  });
-
-  sectionIds.forEach(id => {
-    ScrollTrigger.create({
-      trigger: '#' + id,
-      start: 'top center',
-      end: 'bottom center',
-      onEnter: () => setActive(id),
-      onEnterBack: () => setActive(id),
-    });
-  });
-
-  // ---------------------------------------------------------
-  // 2. SCROLL PROGRESS BAR
-  // ---------------------------------------------------------
-  gsap.to('#scroll-progress', {
-    scaleX: 1,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: document.body,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.3,
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const offset = 88;
+      const top = window.pageYOffset + el.getBoundingClientRect().top - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
-  });
 
-  // ---------------------------------------------------------
-  // 3. SCROLL-TRIGGERED REVEAL ANIMATIONS BETWEEN SECTIONS
-  // ---------------------------------------------------------
-  gsap.utils.toArray('.reveal').forEach((el, i) => {
-    gsap.fromTo(el,
-      { opacity: 0, y: 35 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        delay: reduceMotion ? 0 : (i % 4) * 0.05,
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 90%',
-          toggleActions: 'play none none reverse',
+    function setActive(id) {
+      navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+      pageDots.forEach(d => d.classList.toggle('active', d.dataset.dot === id));
+    }
+
+    document.querySelectorAll('.nav-trigger, .dot-trigger').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = el.dataset.target || el.dataset.dot;
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+        setActive(target);
+        scrollToSection(target);
+      });
+    });
+
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    sectionIds.forEach(id => {
+      ScrollTrigger.create({
+        trigger: '#' + id,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => setActive(id),
+        onEnterBack: () => setActive(id),
+      });
+    });
+
+    // ---------------------------------------------------------
+    // 2. SCROLL PROGRESS BAR
+    // ---------------------------------------------------------
+    gsap.to('#scroll-progress', {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.body,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3,
+      }
+    });
+
+    // ---------------------------------------------------------
+    // 3. SCROLL-TRIGGERED REVEAL ANIMATIONS BETWEEN SECTIONS
+    // ---------------------------------------------------------
+    gsap.utils.toArray('.reveal').forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          delay: reduceMotion ? 0 : (i % 4) * 0.05,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+            toggleActions: 'play none none reverse',
+          }
+        }
+      );
+    });
+
+    // ---------------------------------------------------------
+    // 4. HERO INTRO TIMELINE + AMBIENT BLOBS
+    // ---------------------------------------------------------
+    const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    introTl
+      .from('.hero-eyebrow', { opacity: 0, y: 20, duration: 0.6 })
+      .from('.hero-title-line', { opacity: 0, y: 60, duration: 0.9, stagger: 0.15 }, '-=0.3')
+      .from('.hero-desc', { opacity: 0, y: 20, duration: 0.6 }, '-=0.5')
+      .from('.hero-cta', { opacity: 0, y: 20, duration: 0.6, stagger: 0.12 }, '-=0.35')
+      .from('.hero-photo-wrap', { opacity: 0, scale: 0.94, y: 24, duration: 0.8 }, '-=0.4');
+
+    // animated counters
+    gsap.utils.toArray('.counter').forEach(counter => {
+      const target = parseInt(counter.dataset.targetNum, 10);
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 1.6,
+        delay: 1,
+        ease: 'power2.out',
+        onUpdate: () => { counter.textContent = Math.round(obj.val); }
+      });
+    });
+
+    if (!reduceMotion) {
+      gsap.to('#blob-1', { x: 60, y: 50, duration: 9, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+      gsap.to('#blob-2', { x: -50, y: -40, duration: 11, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+      gsap.to('#scroll-arrow', { y: 6, duration: 0.9, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    }
+
+    // ---------------------------------------------------------
+    // 5. 3D POLAROID BADGE — hanging physics + tilt + spring back
+    // ---------------------------------------------------------
+    const swingEl = document.getElementById('badge-swing');
+    const cardEl = document.getElementById('badge-card');
+    const glareEl = document.getElementById('badge-glare');
+
+    gsap.set(cardEl, { transformPerspective: 900, transformOrigin: 'center center' });
+
+    let swayTween = null;
+    let driftTween = null;
+
+    if (swingEl && !reduceMotion) {
+      swayTween = gsap.to(swingEl, {
+        rotation: 4.5,
+        duration: 2.4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        transformOrigin: 'top center'
+      });
+
+      driftTween = gsap.to(swingEl, {
+        x: 4,
+        duration: 3.1,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: 0.3
+      });
+    }
+
+    if (cardEl) {
+      cardEl.addEventListener('mouseenter', () => {
+        if (swayTween) swayTween.pause();
+        if (driftTween) driftTween.pause();
+        gsap.to(glareEl, { opacity: 1, duration: 0.25, ease: 'power1.out' });
+      });
+
+      cardEl.addEventListener('mousemove', (e) => {
+        const rect = cardEl.getBoundingClientRect();
+        const relX = e.clientX - rect.left;
+        const relY = e.clientY - rect.top;
+        const px = (relX / rect.width) - 0.5;
+        const py = (relY / rect.height) - 0.5;
+
+        gsap.to(cardEl, {
+          rotateY: px * 50,
+          rotateX: -py * 50,
+          duration: 0.5,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+
+        glareEl.style.background =
+          `radial-gradient(circle at ${relX}px ${relY}px, rgba(255,255,255,0.55), transparent 60%)`;
+      });
+
+      cardEl.addEventListener('mouseleave', () => {
+        gsap.to(glareEl, { opacity: 0, duration: 0.4, ease: 'power1.out' });
+        gsap.to(cardEl, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 1.4,
+          ease: 'elastic.out(1.2, 0.3)',
+          overwrite: 'auto',
+          onComplete: () => {
+            if (swayTween) swayTween.resume();
+            if (driftTween) driftTween.resume();
+          }
+        });
+      });
+    }
+
+    // ---------------------------------------------------------
+    // 6. PROJECT CARD TILT + GLOW
+    // ---------------------------------------------------------
+    document.querySelectorAll('.project-card').forEach(card => {
+      gsap.set(card, { transformPerspective: 700 });
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = ((e.clientX - r.left) / r.width) - 0.5;
+        const py = ((e.clientY - r.top) / r.height) - 0.5;
+        gsap.to(card, { rotateY: px * 10, rotateX: -py * 10, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+        card.style.setProperty('--x', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--y', (e.clientY - r.top) + 'px');
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
+      });
+    });
+
+    // ---------------------------------------------------------
+    // 7. CERTIFICATE POPUP MODAL
+    // ---------------------------------------------------------
+    const modal = document.getElementById('certificate-modal');
+    const modalYear = document.getElementById('modal-year');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const modalPreview = document.getElementById('modal-preview');
+    const modalDriveLink = document.getElementById('modal-drive-link');
+    const closeModalBtn = document.getElementById('close-certificate-modal');
+
+    document.querySelectorAll('.certificate-card').forEach(card => {
+      card.addEventListener('click', () => {
+        modalYear.textContent = card.dataset.year;
+        modalTitle.textContent = card.dataset.title;
+        modalDescription.textContent = card.dataset.description;
+        modalPreview.textContent = card.dataset.preview;
+        modalDriveLink.href = card.dataset.drive || '#';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeCertificateModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    closeModalBtn.addEventListener('click', closeCertificateModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeCertificateModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCertificateModal();
+        closeCertModal();
+        closeVideoModal();
+      }
+    });
+
+    // Certificate Modal Handlers (for cert-modal)
+    function openCertModal(imgUrl, caption) {
+      const modal = document.getElementById('cert-modal');
+      const modalImg = document.getElementById('modal-img');
+      const modalCaption = document.getElementById('modal-caption');
+      if (modal && modalImg && modalCaption) {
+        modalImg.src = imgUrl;
+        modalCaption.textContent = caption;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => {
+          modal.classList.remove('opacity-0');
+        }, 20);
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeCertModal() {
+      const modal = document.getElementById('cert-modal');
+      if (modal) {
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 300);
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Video Modal Handlers (for project video demo)
+    function openVideoModal(videoSrc, title, desc, tag1, tag2) {
+      const modal = document.getElementById('video-modal');
+      const video = document.getElementById('project-video');
+      const iframe = document.getElementById('project-iframe');
+
+      const isExternal = videoSrc.startsWith('http://') || videoSrc.startsWith('https://');
+
+      if (isExternal) {
+        let embedUrl = videoSrc;
+        if (videoSrc.includes('drive.google.com')) {
+          const match = videoSrc.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+          if (match && match[1]) {
+            embedUrl = `https://drive.google.com/file/d/${match[1]}/preview`;
+          }
+        }
+        if (iframe) {
+          iframe.src = embedUrl;
+          iframe.classList.remove('hidden');
+        }
+        if (video) {
+          video.classList.add('hidden');
+          video.pause();
+        }
+      } else {
+        if (video && videoSrc) {
+          video.src = videoSrc;
+          video.classList.remove('hidden');
+          video.load();
+        }
+        if (iframe) {
+          iframe.classList.add('hidden');
+          iframe.src = '';
         }
       }
-    );
-  });
 
-  // ---------------------------------------------------------
-  // 4. HERO INTRO TIMELINE + AMBIENT BLOBS
-  // ---------------------------------------------------------
-  const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  introTl
-    .from('.hero-eyebrow', { opacity: 0, y: 20, duration: 0.6 })
-    .from('.hero-title-line', { opacity: 0, y: 60, duration: 0.9, stagger: 0.15 }, '-=0.3')
-    .from('.hero-desc', { opacity: 0, y: 20, duration: 0.6 }, '-=0.5')
-    .from('.hero-cta', { opacity: 0, y: 20, duration: 0.6, stagger: 0.12 }, '-=0.35')
-    .from('.hero-photo-wrap', { opacity: 0, scale: 0.94, y: 24, duration: 0.8 }, '-=0.4');
+      if (title) {
+        const titleEl = document.getElementById('video-title');
+        if (titleEl) titleEl.textContent = title;
+      }
+      if (desc) {
+        const descEl = document.getElementById('video-description');
+        if (descEl) descEl.textContent = desc;
+      }
+      if (tag1) {
+        const tag1El = document.getElementById('video-tag1');
+        if (tag1El) tag1El.textContent = tag1;
+      }
+      if (tag2) {
+        const tag2El = document.getElementById('video-tag2');
+        if (tag2El) tag2El.textContent = tag2;
+      }
 
-  // animated counters
-  gsap.utils.toArray('.counter').forEach(counter => {
-    const target = parseInt(counter.dataset.targetNum, 10);
-    const obj = { val: 0 };
-    gsap.to(obj, {
-      val: target,
-      duration: 1.6,
-      delay: 1,
-      ease: 'power2.out',
-      onUpdate: () => { counter.textContent = Math.round(obj.val); }
-    });
-  });
-
-  if (!reduceMotion) {
-    gsap.to('#blob-1', { x: 60, y: 50, duration: 9, yoyo: true, repeat: -1, ease: 'sine.inOut' });
-    gsap.to('#blob-2', { x: -50, y: -40, duration: 11, yoyo: true, repeat: -1, ease: 'sine.inOut' });
-    gsap.to('#scroll-arrow', { y: 6, duration: 0.9, yoyo: true, repeat: -1, ease: 'sine.inOut' });
-  }
-
-  // ---------------------------------------------------------
-  // 5. 3D POLAROID BADGE — hanging physics + tilt + spring back
-  // ---------------------------------------------------------
-  const swingEl = document.getElementById('badge-swing');
-  const cardEl = document.getElementById('badge-card');
-  const glareEl = document.getElementById('badge-glare');
-
-  gsap.set(cardEl, { transformPerspective: 900, transformOrigin: 'center center' });
-
-  let swayTween = null;
-  let driftTween = null;
-
-  if (swingEl && !reduceMotion) {
-    swayTween = gsap.to(swingEl, {
-      rotation: 4.5,
-      duration: 2.4,
-      ease: 'sine.inOut',
-      yoyo: true,
-      repeat: -1,
-      transformOrigin: 'top center'
-    });
-
-    driftTween = gsap.to(swingEl, {
-      x: 4,
-      duration: 3.1,
-      ease: 'sine.inOut',
-      yoyo: true,
-      repeat: -1,
-      delay: 0.3
-    });
-  }
-
-  if (cardEl) {
-    cardEl.addEventListener('mouseenter', () => {
-      if (swayTween) swayTween.pause();
-      if (driftTween) driftTween.pause();
-      gsap.to(glareEl, { opacity: 1, duration: 0.25, ease: 'power1.out' });
-    });
-
-    cardEl.addEventListener('mousemove', (e) => {
-      const rect = cardEl.getBoundingClientRect();
-      const relX = e.clientX - rect.left;
-      const relY = e.clientY - rect.top;
-      const px = (relX / rect.width) - 0.5;
-      const py = (relY / rect.height) - 0.5;
-
-      gsap.to(cardEl, {
-        rotateY: px * 50,
-        rotateX: -py * 50,
-        duration: 0.5,
-        ease: 'power2.out',
-        overwrite: 'auto'
-      });
-
-      glareEl.style.background =
-        `radial-gradient(circle at ${relX}px ${relY}px, rgba(255,255,255,0.55), transparent 60%)`;
-    });
-
-    cardEl.addEventListener('mouseleave', () => {
-      gsap.to(glareEl, { opacity: 0, duration: 0.4, ease: 'power1.out' });
-      gsap.to(cardEl, {
-        rotateX: 0,
-        rotateY: 0,
-        duration: 1.4,
-        ease: 'elastic.out(1.2, 0.3)',
-        overwrite: 'auto',
-        onComplete: () => {
-          if (swayTween) swayTween.resume();
-          if (driftTween) driftTween.resume();
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => {
+          modal.classList.remove('opacity-0');
+        }, 20);
+        document.body.style.overflow = 'hidden';
+        if (!isExternal && video) {
+          video.currentTime = 0;
+          video.muted = true;
+          video.play().catch(err => console.log("Video autoplay prevented: ", err));
         }
+      }
+    }
+
+    function closeVideoModal() {
+      const modal = document.getElementById('video-modal');
+      const video = document.getElementById('project-video');
+      const iframe = document.getElementById('project-iframe');
+      if (video) {
+        video.pause();
+      }
+      if (iframe) {
+        iframe.src = '';
+      }
+      if (modal) {
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 300);
+        document.body.style.overflow = '';
+      }
+    }
+
+    // ---------------------------------------------------------
+    // 8. CUSTOM CURSOR (pointer devices only)
+    // ---------------------------------------------------------
+    if (window.matchMedia('(pointer: fine)').matches && !reduceMotion) {
+      const cursor = document.getElementById('custom-cursor');
+      cursor.classList.remove('hidden');
+      const xTo = gsap.quickTo(cursor, 'x', { duration: 0.35, ease: 'power3' });
+      const yTo = gsap.quickTo(cursor, 'y', { duration: 0.35, ease: 'power3' });
+      window.addEventListener('mousemove', (e) => { xTo(e.clientX); yTo(e.clientY); });
+
+      document.querySelectorAll('a, button, .cursor-hover').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
       });
-    });
-  }
-
-  // ---------------------------------------------------------
-  // 6. PROJECT CARD TILT + GLOW
-  // ---------------------------------------------------------
-  document.querySelectorAll('.project-card').forEach(card => {
-    gsap.set(card, { transformPerspective: 700 });
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      const px = ((e.clientX - r.left) / r.width) - 0.5;
-      const py = ((e.clientY - r.top) / r.height) - 0.5;
-      gsap.to(card, { rotateY: px * 10, rotateX: -py * 10, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
-      card.style.setProperty('--x', (e.clientX - r.left) + 'px');
-      card.style.setProperty('--y', (e.clientY - r.top) + 'px');
-    });
-    card.addEventListener('mouseleave', () => {
-      gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
-    });
-  });
-
-  // ---------------------------------------------------------
-  // 7. CERTIFICATE POPUP MODAL
-  // ---------------------------------------------------------
-  const modal = document.getElementById('certificate-modal');
-  const modalYear = document.getElementById('modal-year');
-  const modalTitle = document.getElementById('modal-title');
-  const modalDescription = document.getElementById('modal-description');
-  const modalPreview = document.getElementById('modal-preview');
-  const modalDriveLink = document.getElementById('modal-drive-link');
-  const closeModalBtn = document.getElementById('close-certificate-modal');
-
-  document.querySelectorAll('.certificate-card').forEach(card => {
-    card.addEventListener('click', () => {
-      modalYear.textContent = card.dataset.year;
-      modalTitle.textContent = card.dataset.title;
-      modalDescription.textContent = card.dataset.description;
-      modalPreview.textContent = card.dataset.preview;
-      modalDriveLink.href = card.dataset.drive || '#';
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  function closeCertificateModal() {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.body.style.overflow = '';
-  }
-
-  closeModalBtn.addEventListener('click', closeCertificateModal);
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeCertificateModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeCertificateModal();
-  });
-
-  // ---------------------------------------------------------
-  // 8. CUSTOM CURSOR (pointer devices only)
-  // ---------------------------------------------------------
-  if (window.matchMedia('(pointer: fine)').matches && !reduceMotion) {
-    const cursor = document.getElementById('custom-cursor');
-    cursor.classList.remove('hidden');
-    const xTo = gsap.quickTo(cursor, 'x', { duration: 0.35, ease: 'power3' });
-    const yTo = gsap.quickTo(cursor, 'y', { duration: 0.35, ease: 'power3' });
-    window.addEventListener('mousemove', (e) => { xTo(e.clientX); yTo(e.clientY); });
-
-    document.querySelectorAll('a, button, .cursor-hover').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
-    });
-  }
-</script>
+    }
+  </script>
 
 </body>
+
 </html>
